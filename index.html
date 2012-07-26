@@ -1,0 +1,140 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <title>Fuzzy by mattyork</title>
+
+    <link rel="stylesheet" href="stylesheets/styles.css">
+    <link rel="stylesheet" href="stylesheets/pygment_trac.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <!--[if lt IE 9]>
+    <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+  </head>
+  <body>
+    <div class="wrapper">
+      <header>
+        <h1>Fuzzy</h1>
+        <p>Filters a list based on a fuzzy string search</p>
+
+        <p class="view"><a href="https://github.com/mattyork/fuzzy">View the Project on GitHub <small>mattyork/fuzzy</small></a></p>
+
+
+        <ul>
+          <li><a href="https://github.com/mattyork/fuzzy/zipball/master">Download <strong>ZIP File</strong></a></li>
+          <li><a href="https://github.com/mattyork/fuzzy/tarball/master">Download <strong>TAR Ball</strong></a></li>
+          <li><a href="https://github.com/mattyork/fuzzy">View On <strong>GitHub</strong></a></li>
+        </ul>
+      </header>
+      <section>
+        <h1>fuzzy</h1>
+
+<p>1k standalone fuzzy search / fuzzy filter a la Textmate and Sublime Text's command-T fuzzy file search. Node or browser.</p>
+
+<h2>Get It</h2>
+
+<p>Node:</p>
+
+<div class="highlight"><pre><span class="nv">$ </span>npm install fuzzy
+<span class="nv">$ </span>node
+&gt; var <span class="nv">fuzzy</span> <span class="o">=</span> require<span class="o">(</span><span class="s1">'fuzzy'</span><span class="o">)</span>;
+&gt; console.log<span class="o">(</span>fuzzy<span class="o">)</span>
+<span class="o">{</span> <span class="nb">test</span>: <span class="o">[</span>Function<span class="o">]</span>,
+  match: <span class="o">[</span>Function<span class="o">]</span>,
+  filter: <span class="o">[</span>Function<span class="o">]</span> <span class="o">}</span>
+</pre></div>
+
+<p>Browser:</p>
+
+<div class="highlight"><pre><span class="nt">&lt;script </span><span class="na">src=</span><span class="s">"/path/to/fuzzy.js"</span><span class="nt">&gt;&lt;/script&gt;</span>
+<span class="nt">&lt;script&gt;</span>
+  <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">fuzzy</span><span class="p">);</span>
+  <span class="c1">// Object &gt;</span>
+  <span class="c1">//   filter: function (pattern, arr, opts) {</span>
+  <span class="c1">//   match: function (pattern, string, opts) {</span>
+  <span class="c1">//   test: function (pattern, string) {</span>
+<span class="nt">&lt;/script&gt;</span>
+</pre></div>
+
+<h2>Use It</h2>
+
+<p>Padawan: Simply filter an array of strings.</p>
+
+<div class="highlight"><pre><span class="kd">var</span> <span class="nx">list</span> <span class="o">=</span> <span class="p">[</span><span class="s1">'baconing'</span><span class="p">,</span> <span class="s1">'narwhal'</span><span class="p">,</span> <span class="s1">'a mighty bear canoe'</span><span class="p">];</span>
+<span class="kd">var</span> <span class="nx">results</span> <span class="o">=</span> <span class="nx">fuzzy</span><span class="p">.</span><span class="nx">filter</span><span class="p">(</span><span class="s1">'bcn'</span><span class="p">,</span> <span class="nx">list</span><span class="p">)</span>
+<span class="kd">var</span> <span class="nx">matches</span> <span class="o">=</span> <span class="nx">results</span><span class="p">.</span><span class="nx">map</span><span class="p">(</span><span class="kd">function</span><span class="p">(</span><span class="nx">el</span><span class="p">)</span> <span class="p">{</span> <span class="k">return</span> <span class="nx">el</span><span class="p">.</span><span class="nx">string</span><span class="p">;</span> <span class="p">});</span>
+<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">matches</span><span class="p">);</span>
+<span class="c1">// [ 'baconing', 'a mighty bear canoe' ]</span>
+</pre></div>
+
+<p>Jedi: Wrap matching characters in each string</p>
+
+<div class="highlight"><pre><span class="kd">var</span> <span class="nx">list</span> <span class="o">=</span> <span class="p">[</span><span class="s1">'baconing'</span><span class="p">,</span> <span class="s1">'narwhal'</span><span class="p">,</span> <span class="s1">'a mighty bear canoe'</span><span class="p">];</span>
+<span class="kd">var</span> <span class="nx">options</span> <span class="o">=</span> <span class="p">{</span> <span class="nx">pre</span><span class="o">:</span> <span class="s1">'&lt;'</span><span class="p">,</span> <span class="nx">post</span><span class="o">:</span> <span class="s1">'&gt;'</span> <span class="p">};</span>
+<span class="kd">var</span> <span class="nx">results</span> <span class="o">=</span> <span class="nx">fuzzy</span><span class="p">.</span><span class="nx">filter</span><span class="p">(</span><span class="s1">'bcn'</span><span class="p">,</span> <span class="nx">list</span><span class="p">,</span> <span class="nx">options</span><span class="p">)</span>
+<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">results</span><span class="p">);</span>
+<span class="c1">// [</span>
+<span class="c1">//   {string: '&lt;b&gt;a&lt;c&gt;o&lt;n&gt;ing'           , index: 0, score: 3, original: 'baconing'},</span>
+<span class="c1">//   {string: 'a mighty &lt;b&gt;ear &lt;c&gt;a&lt;n&gt;oe', index: 2, score: 3, original: 'a mighty bear canoe'}</span>
+<span class="c1">// ]</span>
+</pre></div>
+
+<p>Jedi Master: sometimes the array you give is not an array of strings. You can
+pass in a function that creates the string to match against from each element
+in the given array</p>
+
+<div class="highlight"><pre><span class="kd">var</span> <span class="nx">list</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="p">{</span><span class="nx">rompalu</span><span class="o">:</span> <span class="s1">'baconing'</span><span class="p">,</span> <span class="nx">zibbity</span><span class="o">:</span> <span class="s1">'simba'</span><span class="p">}</span>
+  <span class="p">,</span> <span class="p">{</span><span class="nx">rompalu</span><span class="o">:</span> <span class="s1">'narwhal'</span> <span class="p">,</span> <span class="nx">zibbity</span><span class="o">:</span> <span class="s1">'mufasa'</span><span class="p">}</span>
+  <span class="p">,</span> <span class="p">{</span><span class="nx">rompalu</span><span class="o">:</span> <span class="s1">'a mighty bear canoe'</span><span class="p">,</span> <span class="nx">zibbity</span><span class="o">:</span> <span class="s1">'saddam hussein'</span><span class="p">}</span>
+<span class="p">];</span>
+<span class="kd">var</span> <span class="nx">options</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="nx">pre</span><span class="o">:</span> <span class="s1">'&lt;'</span>
+  <span class="p">,</span> <span class="nx">post</span><span class="o">:</span> <span class="s1">'&gt;'</span>
+  <span class="p">,</span> <span class="nx">extract</span><span class="o">:</span> <span class="kd">function</span><span class="p">(</span><span class="nx">el</span><span class="p">)</span> <span class="p">{</span> <span class="k">return</span> <span class="nx">el</span><span class="p">.</span><span class="nx">rompalu</span><span class="p">;</span> <span class="p">}</span>
+<span class="p">};</span>
+<span class="kd">var</span> <span class="nx">results</span> <span class="o">=</span> <span class="nx">fuzzy</span><span class="p">.</span><span class="nx">filter</span><span class="p">(</span><span class="s1">'bcn'</span><span class="p">,</span> <span class="nx">list</span><span class="p">,</span> <span class="nx">options</span><span class="p">);</span>
+<span class="kd">var</span> <span class="nx">matches</span> <span class="o">=</span> <span class="nx">results</span><span class="p">.</span><span class="nx">map</span><span class="p">(</span><span class="kd">function</span><span class="p">(</span><span class="nx">el</span><span class="p">)</span> <span class="p">{</span> <span class="k">return</span> <span class="nx">el</span><span class="p">.</span><span class="nx">string</span><span class="p">;</span> <span class="p">});</span>
+<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">matches</span><span class="p">);</span>
+<span class="c1">// [ '&lt;b&gt;a&lt;c&gt;o&lt;n&gt;ing', 'a mighty &lt;b&gt;ear &lt;c&gt;a&lt;n&gt;oe' ]</span>
+</pre></div>
+
+<h2>Examples</h2>
+
+<p>Check out the html files in the examples directory</p>
+
+<h2>Documentation</h2>
+
+<p>Code is well documented and the unit tests cover all functionality</p>
+
+<h2>Contributing</h2>
+
+<p>Fork the repo!</p>
+
+<pre><code>git clone &lt;your_fork&gt;
+cd fuzzy
+npm install -d
+make
+</code></pre>
+
+<p>Add unit tests for any new or changed functionality. Lint, test, and minify using make, then shoot me a pull request.</p>
+
+<h2>Release History</h2>
+
+<p>v0.1.0 - July 25, 2012</p>
+
+<h2>License</h2>
+
+<p>Copyright (c) 2012 Matt York
+Licensed under the MIT license.</p>
+      </section>
+      <footer>
+        <p>This project is maintained by <a href="https://github.com/mattyork">mattyork</a></p>
+        <p><small>Hosted on GitHub Pages &mdash; Theme by <a href="https://github.com/orderedlist">orderedlist</a></small></p>
+      </footer>
+    </div>
+    <script src="javascripts/scale.fix.js"></script>
+    
+  </body>
+</html>
