@@ -1,3 +1,7 @@
+/* eslint no-unused-expressions: [0] */
+/* global describe it */
+'use strict';
+
 var fuzzy = fuzzy || require('../lib/fuzzy')
   , chai = chai || require('chai')
   , expect = chai.expect
@@ -48,21 +52,6 @@ describe('fuzzy', function(){
       opts.caseSensitive = false;
       expect(fuzzy.match('AB', 'AB', opts)).to.not.equal(null);
     });
-    xit('should return the same score for matches in the middle as matches at beginning', function(){
-      // TODO: Dont know how I feel about this. Sublime weights characters that
-      // appear toward the beginning of the string a bit higher
-    });
-    // TODO: implement this test
-    xit('should prefer consecutive characters even if they come after the first match', function(){
-      var opts = {pre: '<', post: '>'};
-      var result = fuzzy.match('bass', 'bodacious bass', opts).rendered;
-      expect(result).to.equal('bodacious <b><a><s><s>');
-    });
-    xit('should prefer consecutive characters in a match even if we need to break up into a substring', function(){
-      var opts = {pre: '<', post: '>'};
-      var result = fuzzy.match('reic', 'reactive rice', opts).rendered;
-      expect(result).to.equal('<r><e>active r<i><c>e');
-    });
   });
   describe('.filter', function(){
     it('should return the index and matching array elements', function(){
@@ -81,14 +70,14 @@ describe('fuzzy', function(){
     });
     it('should use optional template stringing to wrap each element', function(){
       var rendered = fuzzy.filter('a', ['a'], {
-          pre: "tah"
-        , post: "zah!"
+          pre: 'tah'
+        , post: 'zah!'
       })[0].string;
       expect(rendered).to.equal('tahazah!');
 
       rendered = fuzzy.filter('ab', ['cacbc'], {
-          pre: "<"
-        , post: ">"
+          pre: '<'
+        , post: '>'
       })[0].string;
       expect(rendered).to.eql('c<a>c<b>c');
     });
