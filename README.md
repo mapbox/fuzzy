@@ -1,5 +1,9 @@
 # fuzzy
 
+(this is a [fork of mattyork/fuzzy](https://github.com/mattyork/fuzzy), published
+as the fuzzy-mb package on npm. read all instructions below as referring
+to fuzzy-mb)
+
 1k standalone fuzzy search / fuzzy filter a la Textmate and Sublime Text's command-T fuzzy file search. Node or browser.
 
 ## Get it
