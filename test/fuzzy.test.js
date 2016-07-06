@@ -44,7 +44,7 @@ describe('fuzzy', function(){
       expect(consecutiveScore).to.be.above(scatteredScore);
     });
     it('should be case insensitive by default', function(){
-      expect(fuzzy.filter('a', ['A'])[0].string).to.equal('A');
+      expect(fuzzy.filter('a', ['A'])[0].val).to.equal('A');
     });
     it('should take an ignoreCase parameter', function(){
       var opts = {caseSensitive: true};
@@ -59,26 +59,47 @@ describe('fuzzy', function(){
       expect(result).to.have.length(2);
 
       // verify first result
-      expect(result[0].string).to.equal('aba');
+      expect(result[0].val).to.equal('aba');
       expect(result[0].index).to.equal(0);
       expect(result[0]).to.have.property('score');
 
       // verify second result
-      expect(result[1].string).to.equal('cacb');
+      expect(result[1].val).to.equal('cacb');
       expect(result[1].index).to.equal(2);
       expect(result[1]).to.have.property('score');
     });
+    it('should return the index and matching array elements', function(){
+      var result = fuzzy.filter(7, [7, 76, '76', 'aba', 'c', 'cacb']);
+      expect(result).to.have.length(3);
+
+      // verify first result
+      expect(result[0].val).to.equal(7);
+      expect(result[0].index).to.equal(0);
+      expect(result[0]).to.have.property('score');
+
+      // verify second result
+      expect(result[1].val).to.equal(76);
+      expect(result[1].index).to.equal(1);
+      expect(result[1]).to.have.property('score');
+
+      // verify third result
+      expect(result[2].val).to.equal('76');
+      expect(result[2].index).to.equal(2);
+      expect(result[2]).to.have.property('score');
+
+    });
+
     it('should use optional template stringing to wrap each element', function(){
       var rendered = fuzzy.filter('a', ['a'], {
           pre: 'tah'
         , post: 'zah!'
-      })[0].string;
+      })[0].val;
       expect(rendered).to.equal('tahazah!');
 
       rendered = fuzzy.filter('ab', ['cacbc'], {
           pre: '<'
         , post: '>'
-      })[0].string;
+      })[0].val;
       expect(rendered).to.eql('c<a>c<b>c');
     });
     it('should use optional func to get string out of array entry', function() {
@@ -87,13 +108,13 @@ describe('fuzzy', function(){
         extract: function(original) {
           return original.arg;
         }
-      })[0].string).to.equal('hizzahpooslahp');
+      })[0].val).to.equal('hizzahpooslahp');
     });
     it('should return list untouched when given empty pattern', function(){
       // array needs to be over size 10: V8 has stable sort with < 10 elements,
       // unstable with > 10 elements
       var arr = 'abcdefghjklmnop'.split('');
-      var results = _.pluck(fuzzy.filter('', arr), 'string');
+      var results = _.pluck(fuzzy.filter('', arr), 'val');
       expect(results).to.eql(arr);
     });
   });
